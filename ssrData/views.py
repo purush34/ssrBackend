@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Project
-from .serializers import projectSerializer
+from .models import Project,teamDetails,postLikes
+from .serializers import projectSerializer,teamDetailsSerializer,postLikesCount
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -51,7 +51,32 @@ def getYears(request):
 def ssrProjectId(request, projectId):
     try :
         project = Project.objects.get(projectId=projectId)
+        print(project)
     except Project.DoesNotExist:
         return JsonResponse({"Error":"Project not found"})
     serializer = projectSerializer(project)
     return JsonResponse({"Project":serializer.data})
+
+def teamDetailsapi(request, teamId):
+    try :
+        project = teamDetails.objects.filter(projectId=teamId)
+    except teamDetails.DoesNotExist:
+        return JsonResponse({"Error":"Team details not found"})
+    try:
+        serializer = teamDetailsSerializer(project,many=True)
+        return JsonResponse({"Team Details":serializer.data})
+    except:
+        return JsonResponse({"Error":"Team details not found"})
+
+def teams(request):
+    try :
+        project = teamDetails.objects.all()
+        # print teamDetails columns in console
+    except teamDetails.DoesNotExist:
+        return JsonResponse({"Error":"Team details not found"})
+    try:
+        serializer = teamDetailsSerializer(project,many=True)
+        return JsonResponse({"Team Details":serializer.data})
+    except: 
+        return JsonResponse({"Error":"Team details not found"})
+

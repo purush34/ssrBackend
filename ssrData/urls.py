@@ -8,4 +8,6 @@ urlpatterns = [
     path('projects/category/<str:category>/', views.ssrCategory),
     path('projects/year/', views.getYears),
     path('projects/category/', views.getCatories),
+    path('projects/team/<str:teamId>/', views.teamDetailsapi),
+    path('projects/teams/', views.teams),
 ]
