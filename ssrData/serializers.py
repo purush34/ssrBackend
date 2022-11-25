@@ -16,5 +16,5 @@ class teamDetailsSerializer(serializers.ModelSerializer):
 class postLikesCount(serializers.ModelSerializer):
     class Meta:
         model = postLikes
-        fields = ["macAddress", "projectId"]
+        fields = ['count']
     

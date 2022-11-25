@@ -80,3 +80,6 @@ def teams(request):
     except: 
         return JsonResponse({"Error":"Team details not found"})
 
+
+
+
