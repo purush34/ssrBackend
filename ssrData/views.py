@@ -15,7 +15,10 @@ def ssrApiView(request):
     if request.method == 'GET':
         projects = Project.objects.all()
         serializer = projectSerializer(projects, many=True)
-        return JsonResponse({"Projects":serializer.data})
+        pages = [serializer.data[i:i + 20] for i in range(0, len(serializer.data), 20)]
+        
+
+        return JsonResponse({"Projects":pages})
     elif request.method == 'POST':
         serializer = projectSerializer(data=request.data)
         if serializer.is_valid():
