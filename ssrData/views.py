@@ -63,11 +63,14 @@ def ssrProjectId(request, projectId):
 def teamDetailsapi(request, teamId):
     try :
         project = teamDetails.objects.filter(projectId=teamId)
+        projectDetails = Project.objects.get(projectId=teamId)
     except teamDetails.DoesNotExist:
         return JsonResponse({"Error":"Team details not found"})
     try:
         serializer = teamDetailsSerializer(project,many=True)
-        return JsonResponse({"Team Details":serializer.data})
+        serializer2 = projectSerializer(projectDetails)
+        return JsonResponse({"Team Details":serializer.data,"Project Details":serializer2.data})
+        # return JsonResponse({"Team Details":serializer.data})
     except:
         return JsonResponse({"Error":"Team details not found"})
 
@@ -82,6 +85,8 @@ def teams(request):
         return JsonResponse({"Team Details":serializer.data})
     except: 
         return JsonResponse({"Error":"Team details not found"})
+
+
 
 
 
