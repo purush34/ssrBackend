@@ -15,6 +15,10 @@ def ssrApiView(request):
     if request.method == 'GET':
         projects = Project.objects.all()
         serializer = projectSerializer(projects, many=True)
+        # covert categories to list
+        # print(serializer.data[0]['category'].split(','))
+        for i in range(len(serializer.data)):
+            serializer.data[i]['category'] = serializer.data[i]['category'].split(',')
         pages = [serializer.data[i:i + 20] for i in range(0, len(serializer.data), 20)]
         
 
